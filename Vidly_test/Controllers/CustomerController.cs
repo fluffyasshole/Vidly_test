@@ -30,12 +30,5 @@ namespace Vidly_test.Controllers
             if (customers == null)
                 return HttpNotFound();
         }
-        private IEnumerable<Customer> GetCustomers()
-        {
-            return new List<Customer>
-            {
-                new Customer { Id = 1, Name= "J"}
-            }
-        }
     }
 }
