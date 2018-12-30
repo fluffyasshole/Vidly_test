@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Web.Mvc;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.Collections.Generic;
+using System.Data.Entity;
 using Vidly_test.Models;
 
 namespace Vidly_test.Controllers
 {
     public class CustomerController : Controller
     {
-        // GET: Customer
         private ApplicationDbContext _context;
         public CustomerController()
         {
@@ -21,14 +19,15 @@ namespace Vidly_test.Controllers
         }
         public ViewResult Index()
         {
-            var customer = _context.Customers;
-            return View(customer);
+            var customers = _context.Customers.Include(c => c.MembershipType).ToList;
+            return View(customers);
         }
         public ActionResult Details(int id)
         {
-            var customers = _context.Customers.SingleOrDefault(c => c.Id == id);
-            if (customers == null)
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            if (customer == null)
                 return HttpNotFound();
+            return View(customer);
         }
     }
 }
